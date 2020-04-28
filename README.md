@@ -12,7 +12,7 @@ Al final de la pràctica l’alumne haurà estat capaç de poder aprovisionar de
 
 La il·lustració inferior mostra la topologia i les diferents fases en què transcorrerà la pràctica. El portàtil representa la VM creada per Vagrant (*management node*), i els tres nodes del clúster són contenidors de Docker. Tots es troben a la mateixa xarxa de tipus bridge creada per Docker al docker-compose.yml. S’ha de tenir present aquesta topologia durant tota la part pràctica de l’activitat.
 
-![image alt text](image_0.png)
+![image alt text](images/image_0.png)
 
 # Webgrafia
 
@@ -44,7 +44,7 @@ Visualitza aquest [vídeo en castellà de 6 min](https://www.youtube.com/watch?v
 
 2. Indica quin dels dos codis que veus en aquest exemple és declaratiu i per què.
 
-![image alt text](image_1.png)
+![image alt text](images/image_1.png)
 
 *Respon*
 
@@ -85,7 +85,7 @@ Font: https://ubuntu.com/blog/declarative-vs-imperative-devops-done-right
 
 Observa aquesta il·lustració i raona quina metodologia, dreta o esquerra, pertany a la declarativa i per què.
 
-![image alt text](image_2.png)
+![image alt text](images/image_2.png)
 
 7. Retalla i enganxa cadascuna d’aquestes expressions (són idees o bé tecnologies d’un o altre tipus) en una o altra columna. **Ves afegint files a la taula segons necessitis**:
 
@@ -155,7 +155,7 @@ Fins i tot, dintre de la part *provision *de Vagrant, si afegeixes una línia i 
 
 ## Competidors d’Ansible en l’automatització IT
 
-![image alt text](image_3.png)
+![image alt text](images/image_3.png)
 
 No tractarem d’ells de forma específica els altres programes que veus a la il·lustració i que també es fan servir per aprovisionar i automatitzar tasques en servidors, però sí que convé saber que un dels grans avantatges que presenta Ansible respecte tots ells: Ansible és *agentless*, això vol dir que no necessita de la instal·lació de cap software específic propi en els servidors remots. Això sí, necessitaran Python. Puppet (2005) és més antic que Ansible, però aquest té l’impuls de Red Hat. Sense entrar en els detalls de la resta de programes, aquests són els punts forts d’Ansible:
 
@@ -167,7 +167,7 @@ No tractarem d’ells de forma específica els altres programes que veus a la il
 
 * Configuració per PUSH (és el servidor central qui s’encarrega de donar les ordres d’automatització als nodes remots).
 
-![image alt text](image_4.png)
+![image alt text](images/image_4.png)
 
 ## Com s’instal·la Ansible?
 
@@ -329,7 +329,8 @@ En aquest fitxer ansible.cfg hauries de fer constar la clau privada i l’usuari
 
 Nosaltres el que farem serà modificar el fitxer /etc/ansible/ansible.cfg. Recordeu que en aquesta mena de fitxer els valors comentats són els que es troben per defecte. Descomentarem la línia #inventory i hi indicarem la ruta al nostre propi hosts-dev:
 
-inventory      = /root/ansible-playground/hosts-devGràcies a aquest canvi podrem dur a terme les mateixes operacions anteriors però sense necessitat d’indicar la ruta de l’inventari.
+inventory      = /root/ansible-playground/hosts-dev
+Gràcies a aquest canvi podrem dur a terme les mateixes operacions anteriors però sense necessitat d’indicar la ruta de l’inventari.
 
 *Mostra captura de pantalla de Ansible mòdul ping a grup loadbalancer, però aquesta vegada sense indica l’argument de la ruta a l’inventari*
 
@@ -399,21 +400,21 @@ Aquesta estructura tan habitual també es pot resumir en:
 
 Els **handlers **són tasques d’Ansible que només s’executen quan les crida un altra tasca, i fer ho fan a partir d’un event. Un handler molt habitual és aquell que ordena iniciar un servei prèviament instal·lat. En aquesta il·lustració, que mostra la instal·lació i arrencada d’un servidor Apache,  pots veure les tres fases per le sol passar un script d’Ansible i de quina manera la tasca, mitjançant la propietat **notify**, la tasca que instal·la nGinx acaba cridant el handler que el reinicia.
 
-![image alt text](image_5.png)
+![image alt text](images/image_5.png)
 
 ## ➀ Desplegament automatitzat d’un servidor web de dos nodes amb un balancejador de càrrega (Apache i PHP)
 
-![image alt text](image_6.png)
+![image alt text](images/image_6.png)
 
 A la mateixa carpeta de playbooks crearem un playbook anomenat apt-update.yml que dugui a terme l’actualització dels repositoris de paquets a la darrera versió:
 
-![image alt text](image_7.png)
+![image alt text](images/image_7.png)
 
 *Crida aquest playbook i comprova que funciona correctament. Mostra captura de pantalla. Recorda que un fitxer YAML no heu de fer servir tabulacions.*
 
 Continuem amb la configuració de paquets, ara amb la **instal·lació de Apache2** a tots els nodes (al loadbalancer el farem servir en mode reverse proxy). A més als webservers instal·larem php, donat que allotjarem pàgines dinàmiques. Crea a la mateixa carpeta el playbook *install-services.yml*
 
-![image alt text](image_8.png)
+![image alt text](images/image_8.png)
 
 Executa una primera vegada per comprovar que funciona i a continuació executa una segona vegada. Fixa’t, en l’apartat de resultats en PLAY RECAP, en concret en el camp **changed**
 
@@ -443,7 +444,7 @@ echo "Server IP Address is: $ip_server";
 
 I a continuació crea un playbook anomenat *setup-app.yml* que contingui una tasca que permeti copiar el fitxer index.php als webservers, fent servir el mòdul *copy*: fixa’t que el fitxer que puja és el creat anteriorment a la carpeta superior:
 
-![image alt text](image_9.png)
+![image alt text](images/image_9.png)
 
 *Executa aquest playbook i comprova que s’ha copiat en tots dos servidors. Mostra captures de pantalla.*
 
@@ -655,5 +656,5 @@ Es poden executar tots els playbooks a la vegada important-los en un fitxer
 
 L’aspecte final del projecte webservers i reverse proxy amb Ansible hauria de ser aquest:
 
-![image alt text](image_10.png)
+![image alt text](images/image_10.png)
 
