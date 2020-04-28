@@ -1,0 +1,39 @@
+version: '2'
+services:
+  loadbalancer.test:
+    image: ubuntu-ssh
+    container_name: loadbalancer.test
+    hostname: loadbalancer.test
+    ports:
+     - "80:80"
+    networks:
+      vpcbr:
+        ipv4_address: 172.25.0.2
+
+  app1.test:
+    image: ubuntu-ssh
+    container_name: app1.test
+    hostname: app1.test
+    #ports:
+    # - "80:80"
+    networks:
+      vpcbr:
+        ipv4_address: 172.25.0.3
+
+  app2.test:
+    image: ubuntu-ssh
+    container_name: app2.test
+    hostname: app2.test
+    #ports:
+    # - "80:80"
+    networks:
+      vpcbr:
+        ipv4_address: 172.25.0.4
+
+networks: 
+   vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.25.0.0/16
+         gateway: 172.25.0.1
