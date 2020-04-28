@@ -1,4 +1,4 @@
-### Administració Remota amb Ansible
+# Administració Remota amb Ansible
 
 # Prerequisits
 
